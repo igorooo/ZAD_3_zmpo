@@ -51,6 +51,7 @@ void CMenuCommand::get(string FILE, int &POS) {
         POS = FILE.length() + 2;    //flag
         return;
     }
+
     POS++;
 
     STR = this->get_string(FILE,POS);
@@ -93,20 +94,8 @@ void CMenuCommand::get(string FILE, int &POS) {
 }
 
 bool CMenuCommand::condition(char A) {
-
-    char ARR[] = FORBIDDEN_SYMBOLS_FOR_COMMAND;
-    int LENGTH = L_OF_FORB_C;
-
-    for(int i = 0; i < LENGTH; i++){
-
-        if(A == ARR[i])
-            return false;
-    }
-
-    return true;
+    return CMenuItem::condition(A);
 }
-
-
 
 CMenuCommand::CMenuCommand(string S_NAME, string S_COMMAND ,CCommand *COMMAND) {
     this->COMMAND = COMMAND;
@@ -132,6 +121,8 @@ CMenuCommand::CMenuCommand() {}
 void CMenuCommand::remove() {}
 void CMenuCommand::show_leafs() {}
 void CMenuCommand::search(vector<string> STACK,string COMMAND) {}
+
+
 
 
 

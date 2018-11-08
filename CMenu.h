@@ -19,9 +19,10 @@
 #define DELETE_ITEM "delete"
 #define HELP_COM "help"
 #define SEARCH "search"
+#define SAVE "save"
 
-#define FORBIDDEN_SYMBOLS_FOR_COMMAND { ']' , 'NUL'}
-#define L_OF_FORB_C 5
+#define FORBIDDEN_SYMBOLS_FOR_MENU { ']' , 'NUL'}
+#define L_OF_FORB_M 5
 
 
 

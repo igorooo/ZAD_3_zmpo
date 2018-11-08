@@ -43,11 +43,10 @@ string CMenuItem::get_string(string FILE, int &POS) {
     int START_POS = POS;
     string RESULT;
 
-    stringstream SS;
 
-
-    if(FILE[POS] != 39){
-        RESULT += STATEMENT_1;
+    if((int)FILE[POS] != 39){
+        this->print_file(FILE,POS);
+        cout<<STATEMENT_1<<endl;
         POS = FILE.length() + 2;  // sth like flag
         return RESULT;
     }
@@ -56,9 +55,13 @@ string CMenuItem::get_string(string FILE, int &POS) {
 
     while(FILE[POS] != 39){  // 39 is ' in ASCII
 
+        char ARR[] = FORBIDDEN_SYMBOLS_FOR_STRING;
+
+
         if( condition( FILE[POS] ) ){
             RESULT += FILE[POS];
         }
+
 
         if( !condition( FILE[POS] ) ){  //fail
 
@@ -101,11 +104,14 @@ bool CMenuItem::condition(char A) {
     char ARR[] = FORBIDDEN_SYMBOLS_FOR_STRING;
     int LENGTH = L_OF_FORB;
 
+
+
     for(int i = 0; i < LENGTH; i++){
 
         if(A == ARR[i])
             return false;
     }
+
 
     return true;
 }

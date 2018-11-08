@@ -13,29 +13,36 @@
 #include "CTABLE/GetInfo.h"
 #include "CTABLE/SetVal.h"
 #include "CTABLE/Zad1.h"
-#define FORBIDDEN_SYMBOLS { '(' , ')' , '[' , ']' , ','};
+#include "ReadFile.h"
 
 int main() {
+
+    ReadFile READ;
+
+    CMenu *MENU;
+
+    MENU = READ.readfile();
+
+    MENU->run(MENU);
+
+
+    return 0;
+}
 
     //Zad1 *ZAD_1 = new Zad1();
 
     //ZAD_1->run();
 
-    ifstream op("../SAVES/main.txt");
+    /*
+    ifstream op;
+    op.open("../SAVES/main.txt");
 
     string A;
 
 
     getline(op,A);
-   /* cout<<A<<";;;";
-    char tt = 'a';
-    string B = "'A";
-    string C;
-    C += tt;
-    cout<<(int)B[0]<<" "<<(int)B[3]<<endl<<C<<endl;
 
-    */
-
+ */
 
 /*
 
@@ -74,23 +81,38 @@ int main() {
 
     //MAIN->save(MAIN);
 
+    /*
 
     string T = "('Menu glowne','main';('Podmenu1','menu1';['Uruchom przegladarke',',internet','no help added'],('Podmenu11','menu1';)),('Podmenu2','menu2';['Test','test','no help added'],['Default command2','defcom','no help added'],('Podmenu11','menu1';)),['Napisz Ala ma kota','ala','Command writes that ala has cat'])";
     string TT = "('Menu glowne','main';)";
-    int POS = 0;
+    int POS = 0,POS1=0;
 
-    //MAIN->get_string(T,POS);
+    string TTTT = "'Uruchom przegladarke','internet','no help added'";
+
+     */
+
+    //CMenu *MMENU = new CMenu();
+    //cout<<MMENU->get_string(TTTT,POS1)<<endl;
    // cout<<POS<<endl<<T[POS-1]<<endl;
 
 
-    CMenuCommand *CMCOM5 = new CMenuCommand();
+    //CMenuCommand *CMCOM5 = new CMenuCommand();
 
-    /*CMCOM5->get(T,POS);
+
+    /*
+     string TTT = "['Uruchom przegladarke','internet','no help added']";
+
+    CMCOM5->get(TTT,POS);
     CMCOM5->show();
-    cout<<CMCOM5->s_help(); */
+    cout<<CMCOM5->s_help();
+
+    */
+
+    /*
 
     CMenu *TEST_MENU = new CMenu();
     TEST_MENU->get(A,POS);
+    cout<<A.length()<<" "<<POS<<endl;
 
 
     TEST_MENU->run(TEST_MENU);
@@ -103,3 +125,5 @@ int main() {
 
     return 0;
 }
+
+     */

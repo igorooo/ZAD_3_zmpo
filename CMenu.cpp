@@ -132,6 +132,10 @@ void CMenu::run(CMenuItem *MAIN_MENU) {
                 this->search_(MAIN_MENU);
             }
 
+            else if(OPTION_COMMAND == SAVE){
+                this->save(MAIN_MENU);
+            }
+
             else{
                 cout<<"There is no such a position!"<<endl;
             }
@@ -378,23 +382,6 @@ void CMenu::save_current(ofstream &FSTREAM) {
             if(ITER < this->VECTOR.size()-1){
                 FSTREAM<<",";
             }
-
-            /*
-            TEMP = this->VECTOR[ITER];
-
-
-
-            if(TEMP->class_id() == 2){
-
-                TEMP->save_current(FSTREAM);
-
-            }
-            if(TEMP->class_id() == 1){
-
-                TEMP->search(STACK,COMMAND);
-            }
-
-             */
         }
     }
 
@@ -404,13 +391,16 @@ void CMenu::save_current(ofstream &FSTREAM) {
 void CMenu::save(CMenuItem *MAIN_MENU) {
 
     ofstream FSTREAM;
-    string PATH = "../SAVES/";
-    PATH += MAIN_MENU->s_command();
+    string PATH = "../SAVES/",FILE_NAME;
+
+    cout<<"Enter file name (without .txt): ";
+    cin>>FILE_NAME;
+    PATH += FILE_NAME;
     PATH += ".txt";
 
     FSTREAM.open(PATH.c_str());
 
-    this->save_current(FSTREAM);
+    MAIN_MENU->save_current(FSTREAM);
 
     FSTREAM.close();
 }

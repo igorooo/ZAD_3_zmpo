@@ -35,4 +35,4 @@ add_executable(ZAD_3_zmpo
         CMenuCommand.h
         CMenuItem.cpp
         CMenuItem.h
-        main.cpp)
+        main.cpp ReadFile.cpp ReadFile.h)
