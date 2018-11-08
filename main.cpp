@@ -75,9 +75,8 @@ int main() {
     //MAIN->save(MAIN);
 
 
-    string T = "('Menu glowne','main';('Podmenu1','menu1';['Uruchom przegladarke','internet','no help added'],('Podmenu11','menu1';)),('Podmenu2','menu2';['Test','test','no help added'],['Default command2','defcom','no help added'],('Podmenu11','menu1';)),['Napisz Ala ma kota','ala','Command writes that ala has cat'])";
-
-
+    string T = "('Menu glowne','main';('Podmenu1','menu1';['Uruchom przegladarke',',internet','no help added'],('Podmenu11','menu1';)),('Podmenu2','menu2';['Test','test','no help added'],['Default command2','defcom','no help added'],('Podmenu11','menu1';)),['Napisz Ala ma kota','ala','Command writes that ala has cat'])";
+    string TT = "('Menu glowne','main';)";
     int POS = 0;
 
     //MAIN->get_string(T,POS);
@@ -91,9 +90,8 @@ int main() {
     cout<<CMCOM5->s_help(); */
 
     CMenu *TEST_MENU = new CMenu();
-    TEST_MENU->get(T,POS);
+    TEST_MENU->get(A,POS);
 
-    cout<<TEST_MENU->s_name()<<endl;
 
     TEST_MENU->run(TEST_MENU);
 

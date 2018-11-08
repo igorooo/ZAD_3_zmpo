@@ -69,10 +69,6 @@ string CMenuItem::get_string(string FILE, int &POS) {
             return RESULT;
         }
 
-        if( POS < FILE.length() ){
-            POS++;
-        }
-
         if( ! (POS < FILE.length()) ){  //fail
 
             this->print_file(FILE,POS);
@@ -82,6 +78,11 @@ string CMenuItem::get_string(string FILE, int &POS) {
 
             return RESULT;
         }
+
+        if( POS < FILE.length() ){
+            POS++;
+        }
+
     }
 
     POS++;

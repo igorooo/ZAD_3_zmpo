@@ -420,6 +420,8 @@ void CMenu::save(CMenuItem *MAIN_MENU) {
 
 void CMenu::get(string FILE, int &POS) {
 
+    this->add_CMenuItem(this);
+
     int START_POS = POS;
     string STR;
 
@@ -465,6 +467,7 @@ void CMenu::get(string FILE, int &POS) {
 
     // THIRD - children  ---------------------------------
 
+
     if(FILE[POS] != ';'){
 
         this->print_file(FILE,POS);
@@ -495,7 +498,7 @@ void CMenu::get(string FILE, int &POS) {
             CMenu *NEW_MENU = new CMenu();
             this->add_CMenuItem(NEW_MENU);
             NEW_MENU->get(FILE,POS);
-            cout<<this->s_name()<<"->->>"<<NEW_MENU->s_name()<<endl;
+           // cout<<this->s_name()<<"->->>"<<NEW_MENU->s_name()<<endl;
 
             if(POS == FILE.length() + 2){  //routine check
                 return;
@@ -517,7 +520,7 @@ void CMenu::get(string FILE, int &POS) {
             CMenuCommand *NEW_COMM = new CMenuCommand();
             this->add_CMenuItem(NEW_COMM);
             NEW_COMM->get(FILE,POS);
-            cout<<this->s_name()<<"->->>"<<NEW_COMM->s_name()<<endl;
+            //cout<<this->s_name()<<"->->>"<<NEW_COMM->s_name()<<endl;
 
             if(POS == FILE.length() + 2){  //routine check
                 return;
@@ -546,6 +549,9 @@ void CMenu::get(string FILE, int &POS) {
 
 
     //POS++; // ???
+
+
+
 
 }
 
