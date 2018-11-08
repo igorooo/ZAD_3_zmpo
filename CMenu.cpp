@@ -375,6 +375,10 @@ void CMenu::save_current(ofstream &FSTREAM) {
 
             this->VECTOR[ITER]->save_current(FSTREAM);
 
+            if(ITER < this->VECTOR.size()-1){
+                FSTREAM<<",";
+            }
+
             /*
             TEMP = this->VECTOR[ITER];
 
@@ -459,18 +463,97 @@ void CMenu::get(string FILE, int &POS) {
 
     this->set_s_command(STR);
 
+    // THIRD - children  ---------------------------------
+
+    if(FILE[POS] != ';'){
+
+        this->print_file(FILE,POS);
+        cout<<STATEMENT_5<<endl;
+        POS = FILE.length() + 2;    //flag
+        return;
+    }
+    POS++;
+
+    if(FILE[POS] != ')' && FILE[POS] != '[' && FILE[POS] != '(' ){
+        this->print_file(FILE,POS);
+        cout<<STATEMENT_8<<endl;
+        POS = FILE.length() + 2;    //flag
+        return;
+    }
+
+    if(FILE[POS] == ')'){
+        POS++;
+        return;
+    }
 
 
 
+    while( FILE[POS] == '(' || FILE[POS] == '[' ){
+
+        if(FILE[POS] == '('){
+
+            CMenu *NEW_MENU = new CMenu();
+            this->add_CMenuItem(NEW_MENU);
+            NEW_MENU->get(FILE,POS);
+            cout<<this->s_name()<<"->->>"<<NEW_MENU->s_name()<<endl;
+
+            if(POS == FILE.length() + 2){  //routine check
+                return;
+            }
 
 
+            if(FILE[POS] != ',' && FILE[POS] != ')'){
 
+                this->print_file(FILE,POS);
+                cout<<STATEMENT_3<<endl;
+                //cout<<this->s_name()<<" "<<NEW_MENU->s_name();
+                POS = FILE.length() + 2;    //flag
+                return;
+            }
+        }
+
+        else if(FILE[POS] == '['){
+
+            CMenuCommand *NEW_COMM = new CMenuCommand();
+            this->add_CMenuItem(NEW_COMM);
+            NEW_COMM->get(FILE,POS);
+            cout<<this->s_name()<<"->->>"<<NEW_COMM->s_name()<<endl;
+
+            if(POS == FILE.length() + 2){  //routine check
+                return;
+            }
+
+            if(FILE[POS] != ',' && FILE[POS] != ')'){
+
+                this->print_file(FILE,POS);
+                cout<<STATEMENT_3<<endl;
+                POS = FILE.length() + 2;    //flag
+                return;
+            }
+        }
+
+        else{
+
+            this->print_file(FILE,POS);
+            cout<<STATEMENT_8<<endl;
+            POS = FILE.length() + 2;    //flag
+            return;
+        }
+
+
+        POS++;
+    }
+
+
+    //POS++; // ???
 
 }
 
 bool CMenu::condition(char A) {
     return CMenuItem::condition(A);
 }
+
+
 
 CMenu::CMenu(string S_NAME, string S_COMMAND) {
     this->S_NAME = S_NAME;

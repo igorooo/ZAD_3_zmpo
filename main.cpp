@@ -37,7 +37,7 @@ int main() {
     */
 
 
-
+/*
 
     CMenu *MAIN = new CMenu("Menu glowne","main");
     CMenu *MENU1 = new CMenu("Podmenu1","menu1");
@@ -66,6 +66,7 @@ int main() {
     MENU2->add_CMenuItem(CMCOM4);
     MENU2->add_CMenuItem(MENU111);
 
+ */
 
     //MAIN->show_leafs();
 
@@ -74,9 +75,10 @@ int main() {
     //MAIN->save(MAIN);
 
 
-    string T = "qwe['Uruchom przegladarke','internet','no help added']koniec";
+    string T = "('Menu glowne','main';('Podmenu1','menu1';['Uruchom przegladarke','internet','no help added'],('Podmenu11','menu1';)),('Podmenu2','menu2';['Test','test','no help added'],['Default command2','defcom','no help added'],('Podmenu11','menu1';)),['Napisz Ala ma kota','ala','Command writes that ala has cat'])";
 
-    int POS = 3;
+
+    int POS = 0;
 
     //MAIN->get_string(T,POS);
    // cout<<POS<<endl<<T[POS-1]<<endl;
@@ -84,14 +86,21 @@ int main() {
 
     CMenuCommand *CMCOM5 = new CMenuCommand();
 
-    CMCOM5->get(T,POS);
+    /*CMCOM5->get(T,POS);
     CMCOM5->show();
-    cout<<CMCOM5->s_help();
+    cout<<CMCOM5->s_help(); */
+
+    CMenu *TEST_MENU = new CMenu();
+    TEST_MENU->get(T,POS);
+
+    cout<<TEST_MENU->s_name()<<endl;
+
+    TEST_MENU->run(TEST_MENU);
 
 
 
 
-    delete MAIN;
+   // delete MAIN;
 
 
     return 0;

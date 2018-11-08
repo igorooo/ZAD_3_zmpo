@@ -20,6 +20,7 @@
 #define STATEMENT_5 "<-|MISMATCH here, <;> expected|"
 #define STATEMENT_6 "<-|MISMATCH here, <)> expected|"
 #define STATEMENT_7 "<-|MISMATCH here, <(> expected|"
+#define STATEMENT_8 "<-|MISMATCH here, <)> expected or children definition|"
 
 
 using namespace std;
