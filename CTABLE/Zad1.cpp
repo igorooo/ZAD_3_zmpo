@@ -39,7 +39,7 @@ void Zad1::run() {
 
     for(int i = 0; i < CMENU_COMMAND_ARRAY.size(); i++) MENU->add_CMenuItem(CMENU_COMMAND_ARRAY[i]);
 
-    MENU->run();
+    MENU->run(MENU);
 
     REMOVE_ALL->run_command();
 

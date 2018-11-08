@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstdlib>
+#include <fstream>
 #include "CMenu.h"
 #include "CCommand.h"
 #include "CMenuCommand.h"
@@ -12,6 +13,7 @@
 #include "CTABLE/GetInfo.h"
 #include "CTABLE/SetVal.h"
 #include "CTABLE/Zad1.h"
+#define FORBIDDEN_SYMBOLS { '(' , ')' , '[' , ']' , ','};
 
 int main() {
 
@@ -19,12 +21,29 @@ int main() {
 
     //ZAD_1->run();
 
+    ifstream op("../SAVES/main.txt");
+
+    string A;
+
+
+    getline(op,A);
+   /* cout<<A<<";;;";
+    char tt = 'a';
+    string B = "'A";
+    string C;
+    C += tt;
+    cout<<(int)B[0]<<" "<<(int)B[3]<<endl<<C<<endl;
+
+    */
+
+
 
 
     CMenu *MAIN = new CMenu("Menu glowne","main");
     CMenu *MENU1 = new CMenu("Podmenu1","menu1");
     CMenu *MENU2 = new CMenu("Podmenu2","menu2");
-    CMenu *MENU11 = new CMenu("Podmenu11","menu11");
+    CMenu *MENU11 = new CMenu("Podmenu11","menu1");
+    CMenu *MENU111 = new CMenu("Podmenu11","menu1");
 
 
     CCommand *COM = new CCommand("Ala ma kota");
@@ -36,6 +55,8 @@ int main() {
     CMenuCommand *CMCOM3 = new CMenuCommand("Test","test",COM2);
     CMenuCommand *CMCOM4 = new CMenuCommand("Default command2","defcom",COM3);
 
+    CMCOM1->add_help("Command writes that ala has cat");
+
     MAIN->add_CMenuItem(MENU1);
     MAIN->add_CMenuItem(MENU2);
     MAIN->add_CMenuItem(CMCOM1);
@@ -43,11 +64,34 @@ int main() {
     MENU1->add_CMenuItem(MENU11);
     MENU2->add_CMenuItem(CMCOM3);
     MENU2->add_CMenuItem(CMCOM4);
+    MENU2->add_CMenuItem(MENU111);
 
 
-    MAIN->show_leafs();
+    //MAIN->show_leafs();
 
-    MAIN->run();
+   // MAIN->run(MAIN);
+
+    //MAIN->save(MAIN);
+
+
+    string T = "qwe['Uruchom przegladarke','internet','no help added']koniec";
+
+    int POS = 3;
+
+    //MAIN->get_string(T,POS);
+   // cout<<POS<<endl<<T[POS-1]<<endl;
+
+
+    CMenuCommand *CMCOM5 = new CMenuCommand();
+
+    CMCOM5->get(T,POS);
+    CMCOM5->show();
+    cout<<CMCOM5->s_help();
+
+
+
+
+    delete MAIN;
 
 
     return 0;

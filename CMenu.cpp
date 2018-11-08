@@ -79,15 +79,15 @@ int CMenu::delete_command_helper(string COMMAND) {
 
 
 
-void CMenu::run() {
+void CMenu::run(CMenuItem *MAIN_MENU) {
 
-    string OPTION_COMMAND = "";
+    string OPTION_COMMAND; // = "";
     int BOUND,COMMAND_POSITION;
 
 
-    while(OPTION_COMMAND.compare(BACK) != 0){
+    while(OPTION_COMMAND != BACK){
 
-        system("clear");
+       // system("clear");
 
         BOUND = this->VECTOR.size();
 
@@ -110,7 +110,7 @@ void CMenu::run() {
 
         if(COMMAND_POSITION != -1){
 
-            this->VECTOR[COMMAND_POSITION]->run();
+            this->VECTOR[COMMAND_POSITION]->run(MAIN_MENU);
 
         }
 
@@ -122,6 +122,14 @@ void CMenu::run() {
 
             else if(OPTION_COMMAND == DELETE_ITEM){
                 this->delete_menu();
+            }
+
+            else if(OPTION_COMMAND == HELP_COM){
+                this->help();
+            }
+
+            else if(OPTION_COMMAND == SEARCH){
+                this->search_(MAIN_MENU);
             }
 
             else{
@@ -141,7 +149,7 @@ void CMenu::add_CMenuItem(CMenuItem *ITEM) {
 
 void CMenu::edit_menu() {
 
-    system("clear");
+  //  system("clear");
     cout<<"1. To add new menu here enter (menu)\n2. To add new command here enter (command)\n";
 
     string OPTION,S_NAME,S_COMMAND;
@@ -200,8 +208,8 @@ void CMenu::remove() {
 
     while(this->VECTOR.size() > 1){
 
-        TEMP = VECTOR.back();
-        VECTOR.pop_back();
+        TEMP = this->VECTOR.back();
+        this->VECTOR.pop_back();
 
         if(TEMP->class_id() == 1){
 
@@ -216,9 +224,9 @@ void CMenu::remove() {
 
 void CMenu::delete_item(int POSITION) {
 
-    CMenuItem *TEMP = VECTOR[POSITION];
+    CMenuItem *TEMP = this->VECTOR[POSITION];
 
-    VECTOR.erase(VECTOR.begin()+POSITION);
+    this->VECTOR.erase(this->VECTOR.begin()+POSITION);
 
     if(TEMP->class_id() == 1){
         TEMP->remove();
@@ -252,11 +260,11 @@ void CMenu::show_leafs() {
 
    // cout<<"entered: "<<this->S_NAME<<endl;
 
-    if(VECTOR.size() > 1){
+    if(this->VECTOR.size() > 1){
 
-        for(int ITER = 1; ITER < VECTOR.size(); ITER++){
+        for(int ITER = 1; ITER < this->VECTOR.size(); ITER++){
 
-            TEMP = VECTOR[ITER];
+            TEMP = this->VECTOR[ITER];
 
             if(TEMP->class_id() == 2){
                 cout<<"Leaf: ";
@@ -282,7 +290,187 @@ void CMenu::show_leafs() {
 }
 
 
+void CMenu::help() {
 
+    string COMMAND;
+    cin>>COMMAND;
+
+    int COMMAND_POSITION = check_for_command(COMMAND);
+
+    if(COMMAND_POSITION == -1){
+
+        cout<<"command doesnt exist in this menu"<<endl;
+    }
+
+    else{
+
+        if(VECTOR[COMMAND_POSITION]->class_id() == 2){
+            cout<<VECTOR[COMMAND_POSITION]->s_help()<<endl;
+        }
+
+        else{
+            cout<<"command doesnt exist in this menu"<<endl;
+        }
+    }
+}
+
+void CMenu::search_(CMenuItem *MAIN_MENU){
+
+    string COMMAND;
+    cin>>COMMAND;
+    vector<string> STACK;
+    MAIN_MENU->search(STACK,COMMAND);
+}
+
+void CMenu::search(vector<string> STACK,string COMMAND) {
+
+    CMenuItem *TEMP;
+
+    if(this->s_command() == COMMAND){
+
+        for(int i = 0; i < STACK.size() ; i++){
+            cout<<STACK[i]<<"/";
+        }
+        cout<<this->s_command()<<endl;
+
+    }
+
+    STACK.push_back(this->s_name());
+
+
+    if(this->VECTOR.size() > 1){
+
+        for(int ITER = 1; ITER < this->VECTOR.size(); ITER++){
+
+            TEMP = this->VECTOR[ITER];
+
+            if(TEMP->class_id() == 2){
+
+                if(TEMP->s_command() == COMMAND){
+                    for(int i = 0; i < STACK.size() ; i++){
+                        cout<<STACK[i]<<"/";
+                    }
+                    cout<<TEMP->s_command()<<endl;
+                }
+            }
+            if(TEMP->class_id() == 1){
+                TEMP->search(STACK,COMMAND);
+            }
+        }
+    }
+
+
+    STACK.pop_back();
+
+}
+
+void CMenu::save_current(ofstream &FSTREAM) {
+
+    FSTREAM<<"('"<<this->s_name()<<"','"<<this->s_command()<<"';";
+    CMenuItem *TEMP;
+
+    if(this->VECTOR.size() > 1){
+
+        for(int ITER = 1; ITER < this->VECTOR.size(); ITER++){
+
+            this->VECTOR[ITER]->save_current(FSTREAM);
+
+            /*
+            TEMP = this->VECTOR[ITER];
+
+
+
+            if(TEMP->class_id() == 2){
+
+                TEMP->save_current(FSTREAM);
+
+            }
+            if(TEMP->class_id() == 1){
+
+                TEMP->search(STACK,COMMAND);
+            }
+
+             */
+        }
+    }
+
+    FSTREAM<<")";
+}
+
+void CMenu::save(CMenuItem *MAIN_MENU) {
+
+    ofstream FSTREAM;
+    string PATH = "../SAVES/";
+    PATH += MAIN_MENU->s_command();
+    PATH += ".txt";
+
+    FSTREAM.open(PATH.c_str());
+
+    this->save_current(FSTREAM);
+
+    FSTREAM.close();
+}
+
+
+
+
+void CMenu::get(string FILE, int &POS) {
+
+    int START_POS = POS;
+    string STR;
+
+    //BEGGINING of pattern
+
+    if( FILE[POS] != '('){
+        this->print_file(FILE,POS);
+        cout<<STATEMENT_7<<endl;
+        POS = FILE.length() + 2;    //flag
+        return;
+    }
+    POS ++;
+
+    //FIRST (S_NAME)
+
+    STR = this->get_string(FILE,POS);
+
+    if(POS == FILE.length() + 2){   // checking after every outside function call
+        return;
+    }
+
+    this->set_s_name(STR);
+
+
+    // SECOND ... , (S_COMMAND)
+
+    if(FILE[POS] != ','){
+
+        this->print_file(FILE,POS);
+        cout<<STATEMENT_3<<endl;
+        POS = FILE.length() + 2;    //flag
+        return;
+    }
+    POS++;
+
+    STR = this->get_string(FILE,POS);
+
+    if(POS == FILE.length() + 2){
+        return;
+    }
+
+    this->set_s_command(STR);
+
+
+
+
+
+
+
+
+}
+
+bool CMenu::condition(char A) {
+    return CMenuItem::condition(A);
+}
 
 CMenu::CMenu(string S_NAME, string S_COMMAND) {
     this->S_NAME = S_NAME;
@@ -298,9 +486,23 @@ CMenu::CMenu(string S_NAME, string S_COMMAND, vector<CTable *> &TABLE) {
 
 }
 
+CMenu::CMenu() {}
+
 CMenu::~CMenu() {
 
     this->remove();
     cout<<"removing: "<<this->S_NAME<<endl;
 
 }
+
+
+
+
+
+
+
+
+
+
+
+

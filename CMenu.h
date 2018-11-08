@@ -8,13 +8,21 @@
 #include <vector>
 #include <string>
 #include <cstdlib>
+#include <fstream>
 #include "CMenuItem.h"
 #include "CMenuCommand.h"
 #include "CTABLE/CTable.h"
+#include <stack>
 #define CMENU_ID 1
 #define BACK "back"
 #define EDIT_MENU "edit"
 #define DELETE_ITEM "delete"
+#define HELP_COM "help"
+#define SEARCH "search"
+
+#define FORBIDDEN_SYMBOLS_FOR_COMMAND { ']' , 'NUL'}
+#define L_OF_FORB_C 5
+
 
 
 using namespace std;
@@ -31,7 +39,7 @@ private:
 
 public:
 
-    void run();
+    void run(CMenuItem *MAIN_MENU);
     int check_for_command(string COMMAND);
     int check_for_name(string NAME);
     void add_CMenuItem(CMenuItem *ITEM);
@@ -42,7 +50,15 @@ public:
     int delete_command_helper(string COMMAND);
     int class_id();
     void show_leafs();
+    void help();
+    void search_(CMenuItem *MAIN_MENU);
+    void search(vector<string> STACK,string COMMAND);
+    void save(CMenuItem *MAIN_MENU);
+    void save_current(ofstream &FSTREAM);
+    void get(string FILE,int &POS);
+    bool condition(char A);
 
+    CMenu();
     CMenu(string S_NAME, string S_COMMAND,vector <CTable*> &TABLE);
     CMenu(string S_NAME, string S_COMMAND);
     ~CMenu();
