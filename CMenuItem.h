@@ -10,6 +10,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <queue>
 
 #define FORBIDDEN_SYMBOLS_FOR_STRING { '(' , ')' , '[' , ']' , ',' , ';' , 'NUL'}
 #define L_OF_FORB 7
@@ -31,6 +32,7 @@ protected:
     string S_COMMAND;
     string S_NAME;
     string S_HELP;
+    int LEVEL;
 
 public:
     virtual void run(CMenuItem *MAIN_MENU) = 0;
@@ -40,9 +42,12 @@ public:
     virtual void search(vector<string> STACK,string COMMAND) = 0;
     virtual void save_current(ofstream &FSTREAM) = 0;
     virtual void get(string FILE,int &POS) = 0;
+    virtual void show_levels_(vector<queue<CMenuItem* > > &QUEUE, int LEVEL) = 0;
     void set_s_command(string S_COMMAND);
     void set_s_name(string S_NAME);
     void set_s_help(string (S_HELP));
+    void set_level(int LEVEL);
+    int get_level();
     string s_command();
     string s_name();
     string s_help();
@@ -51,6 +56,7 @@ public:
     string get_string(string FILE, int &POS);
     void print_file(string FILE, int POS);
     virtual bool condition(char A);
+
 
     virtual ~CMenuItem();
 

@@ -541,9 +541,83 @@ void CMenu::get(string FILE, int &POS) {
     //POS++; // ???
 
 
+}
+
+void CMenu::show_levels(CMenuItem *MAIN_MENU){
+
+    //cout<<MAIN_MENU->s_name()<<endl;
+    typedef std::queue<CMenuItem*> Q;
+
+    vector<queue <CMenuItem*> > QUEUE;
+    for(int i = 0; i < MAX_LEVEL ; i++){
+
+        QUEUE.push_back(Q());
+    }
+
+    QUEUE[0].push(MAIN_MENU);
+
+    MAIN_MENU->show_levels_(QUEUE,1);
+
+
+
+    for(int i = 0; i < QUEUE.size(); i++){
+
+        while( ! QUEUE[i].empty() ){
+            cout<<QUEUE[i].front()->s_name()<<"  ";
+            QUEUE[i].pop();
+        }
+
+
+        cout<<endl;
+    }
 
 
 }
+
+void CMenu::show_levels_(vector<queue<CMenuItem* > > &QUEUE, int LEVEL) {
+
+    CMenuItem *TEMP;
+    bool flag = true;
+
+    queue<CMenuItem*> LQUEUE;
+
+
+    // cout<<"entered: "<<this->S_NAME<<endl;
+
+    if(this->VECTOR.size() > 1){
+
+        for(int ITER = 1; ITER < this->VECTOR.size(); ITER++){
+
+            TEMP = this->VECTOR[ITER];
+
+
+            if(TEMP->class_id() == 1){
+                LQUEUE.push(TEMP);
+
+            }
+
+            QUEUE[LEVEL].push(TEMP);
+
+         //   cout<<QUEUE[LEVEL].front()->s_name()<<" ";
+
+        }
+
+
+    }
+
+    while( ! LQUEUE.empty() ){
+
+        TEMP = LQUEUE.front();
+        LQUEUE.pop();
+
+        TEMP->show_levels_(QUEUE,LEVEL+1);
+    }
+
+
+
+
+}
+
 
 bool CMenu::condition(char A) {
     return CMenuItem::condition(A);

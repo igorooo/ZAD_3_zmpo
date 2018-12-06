@@ -35,6 +35,7 @@ public:
     void save_current(ofstream &FSTREAM);
     void get(string FILE,int &POS);
     bool condition(char A);
+    void show_levels_(vector<queue<CMenuItem* > > &QUEUE, int LEVEL);
 
     CMenuCommand(string S_NAME, string S_COMMAND ,CCommand *COMMAND);
     CMenuCommand(string S_NAME, string S_COMMAND);

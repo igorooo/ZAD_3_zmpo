@@ -23,6 +23,10 @@ int main() {
 
     MENU = READ.readfile();
 
+
+
+    MENU->show_levels(MENU);
+
     MENU->run(MENU);
 
 

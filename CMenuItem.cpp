@@ -118,6 +118,14 @@ bool CMenuItem::condition(char A) {
 
 CMenuItem::~CMenuItem() {}
 
+void CMenuItem::set_level(int LEVEL) {
+    this->LEVEL = LEVEL;
+}
+
+int CMenuItem::get_level() {
+    return this->LEVEL;
+}
+
 
 
 

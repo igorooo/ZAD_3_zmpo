@@ -13,6 +13,7 @@
 #include "CMenuCommand.h"
 #include "CTABLE/CTable.h"
 #include <stack>
+#include <queue>
 #define CMENU_ID 1
 #define BACK "back"
 #define EDIT_MENU "edit"
@@ -20,6 +21,7 @@
 #define HELP_COM "help"
 #define SEARCH "search"
 #define SAVE "save"
+#define MAX_LEVEL 10
 
 #define FORBIDDEN_SYMBOLS_FOR_MENU { ']' , 'NUL'}
 #define L_OF_FORB_M 5
@@ -58,6 +60,8 @@ public:
     void save_current(ofstream &FSTREAM);
     void get(string FILE,int &POS);
     bool condition(char A);
+    void show_levels(CMenuItem *MAIN_MENU);
+    void show_levels_(vector<queue<CMenuItem* > > &QUEUE, int LEVEL);
 
     CMenu();
     CMenu(string S_NAME, string S_COMMAND,vector <CTable*> &TABLE);

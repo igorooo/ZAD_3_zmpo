@@ -121,6 +121,7 @@ CMenuCommand::CMenuCommand() {}
 void CMenuCommand::remove() {}
 void CMenuCommand::show_leafs() {}
 void CMenuCommand::search(vector<string> STACK,string COMMAND) {}
+void CMenuCommand::show_levels_(vector<queue<CMenuItem* > > &QUEUE, int LEVEL) {}
 
 
 
